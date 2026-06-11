@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hermes Workshop — From Setup to Real Operator Workflows</title>
+<style>
+  :root{
+    --bg:#0e1117; --ink:#f6f1e8; --muted:#a6adbb; --panel:#161b24; --line:#2a3241;
+    --paper:#f6f1e8; --paper-ink:#11151c; --paper-muted:#5b6372;
+    --accent:#ff6b3d; --accent2:#45d6b5; --blue:#7aa2ff; --yellow:#ffd166;
+    --radius:34px; --shadow:0 30px 90px rgba(0,0,0,.38);
+    --font:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:"SFMono-Regular","Cascadia Code","Roboto Mono",Consolas,monospace;
+  }
+  *{box-sizing:border-box} html,body{height:100%;margin:0;background:#090b10;color:var(--ink);font-family:var(--font);overflow:hidden}
+  .stage{height:100vh;width:100vw;position:relative;padding:22px;background:
+    radial-gradient(900px 500px at 80% 8%, rgba(255,107,61,.18), transparent 65%),
+    radial-gradient(800px 500px at 14% 92%, rgba(69,214,181,.13), transparent 65%),#090b10;}
+  .deck{width:1920px;height:1080px;position:absolute;left:50%;top:50%;transform-origin:center center;box-shadow:var(--shadow);background:var(--bg);overflow:hidden;border-radius:22px}
+  section.slide{position:absolute;inset:0;padding:78px 92px;display:none;overflow:hidden}
+  section.slide.active{display:block}
+  .kicker{font-size:26px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent2);font-weight:800;margin-bottom:28px}
+  h1,h2,h3,p{margin:0} h1{font-size:106px;line-height:.95;letter-spacing:-.07em;max-width:1320px} h2{font-size:72px;line-height:.98;letter-spacing:-.055em;max-width:1160px} h3{font-size:34px;line-height:1.08;letter-spacing:-.02em} p{font-size:28px;line-height:1.32;color:var(--muted)}
+  .subtitle{font-size:34px;line-height:1.28;color:#d7dce6;max-width:1040px;margin-top:30px}.small{font-size:22px;color:var(--muted);line-height:1.35}.tiny{font-size:18px;color:var(--muted)}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:44px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}.mt{margin-top:56px}.mt2{margin-top:34px}
+  .card{background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.018));border:1px solid rgba(255,255,255,.09);border-radius:var(--radius);padding:34px;min-height:230px;box-shadow:0 18px 50px rgba(0,0,0,.18)}
+  .card h3{margin-bottom:18px}.card p,.card li{font-size:24px;color:#c5cad5;line-height:1.28}.card ul{margin:0;padding-left:24px}.pill{display:inline-flex;align-items:center;gap:12px;border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.045);border-radius:999px;padding:12px 18px;font-size:21px;color:#dfe5ef;font-weight:700}
+  .number{font-size:82px;letter-spacing:-.06em;font-weight:900;color:var(--accent);line-height:.9}.mono{font-family:var(--mono)}
+  .light{background:var(--paper);color:var(--paper-ink)}.light .kicker{color:#0f8f78}.light p,.light .small,.light .tiny{color:var(--paper-muted)}.light .card{background:#fff;border:1px solid #e7ded0;box-shadow:0 12px 36px rgba(30,28,23,.08)}.light .card p,.light .card li{color:#424a57}.light .pill{background:#fff;border-color:#e7ded0;color:#222831}.light .number{color:#e5582d}
+  .hero-blob{position:absolute;right:-120px;bottom:-180px;width:780px;height:780px;border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--accent),#7739ff 48%,transparent 69%);filter:blur(.2px);opacity:.8}.hero-lines{position:absolute;inset:auto 90px 90px auto;width:620px;height:360px;border:1px solid rgba(255,255,255,.1);border-radius:42px;background:repeating-linear-gradient(0deg,rgba(255,255,255,.055),rgba(255,255,255,.055) 1px,transparent 1px,transparent 42px)}
+  .footer{position:absolute;left:92px;right:92px;bottom:40px;display:flex;justify-content:space-between;align-items:center;color:rgba(255,255,255,.45);font-size:18px}.light .footer{color:rgba(0,0,0,.42)}
+  .progress{position:absolute;left:0;bottom:0;height:6px;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0%;z-index:20}.counter{position:fixed;right:22px;top:18px;color:#9ba3b2;font:14px var(--mono);z-index:30;background:rgba(9,11,16,.55);padding:6px 10px;border-radius:999px}.navhint{position:fixed;left:22px;top:18px;color:#737b8b;font:14px var(--mono);z-index:30;background:rgba(9,11,16,.55);padding:6px 10px;border-radius:999px}
+  .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:22px}.step{background:#fff;border:1px solid #e6ded2;border-radius:30px;padding:26px;min-height:240px}.step .idx{font:800 19px var(--mono);color:#e5582d;margin-bottom:36px}.step h3{font-size:28px}.step p{font-size:22px;margin-top:14px}
+  .terminal{background:#0b0e14;border:1px solid #252d3a;border-radius:30px;padding:28px;font-family:var(--mono);font-size:22px;line-height:1.6;color:#dce5f4;box-shadow:inset 0 1px rgba(255,255,255,.06)}.terminal .prompt{color:#45d6b5}.terminal .comment{color:#7d8797}.terminal .cmd{color:#ffd166}.terminal .out{color:#a8b3c7}
+  .tagcloud{display:flex;gap:14px;flex-wrap:wrap}.tag{font-size:23px;font-weight:800;border-radius:18px;padding:14px 17px;background:#fff;border:1px solid #e7ded0;color:#1a1f29}.tag.dark{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.1);color:#eaf0fa}
+  .split-big{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center;height:780px}.quote{font-size:46px;line-height:1.1;letter-spacing:-.035em;color:#f5efe6}.diagram{position:relative;height:620px}.node{position:absolute;border-radius:28px;padding:22px 26px;background:#fff;color:#151922;border:1px solid #e6ded2;box-shadow:0 18px 45px rgba(0,0,0,.12);min-width:250px}.node.dark{background:#151a23;color:#eef3fb;border-color:#2d3646}.node b{display:block;font-size:26px}.node span{display:block;font-size:19px;color:#697284;margin-top:7px}.node.dark span{color:#9aa4b5}.wire{position:absolute;height:3px;background:#d8cfc3;transform-origin:left center}.dark .wire{background:#3a4354}
+  .bigword{font-size:150px;line-height:.85;letter-spacing:-.08em;font-weight:950}.agenda{counter-reset:item;display:grid;gap:18px;margin-top:40px}.agenda div{display:grid;grid-template-columns:76px 1fr;align-items:center;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:28px;padding:20px 26px;font-size:30px}.agenda div:before{counter-increment:item;content:counter(item,decimal-leading-zero);font:800 24px var(--mono);color:var(--accent2)}
+  @media print{body{overflow:visible;background:#fff}.stage{display:block;height:auto;width:auto;padding:0;background:#fff}.deck{transform:none!important;width:1920px;height:auto;border-radius:0;box-shadow:none}.slide{display:block!important;position:relative!important;page-break-after:always}.counter,.navhint,.progress{display:none}}
+</style>
+</head>
+<body>
+<div class="stage"><main class="deck" id="deck">
+  <section class="slide active" data-title="Title">
+    <div class="kicker">Hermes Agent Workshop</div>
+    <h1>From setup to real operator workflows</h1>
+    <p class="subtitle">A practical walkthrough of how we use Hermes as a persistent, tool-using AI operator across terminal, WhatsApp, Notion, scheduled jobs, content systems, and business operations.</p>
+    <div class="mt2 tagcloud"><span class="tag dark">Setup</span><span class="tag dark">Config</span><span class="tag dark">Tools</span><span class="tag dark">Skills</span><span class="tag dark">Memory</span><span class="tag dark">Cron</span><span class="tag dark">Gateway</span><span class="tag dark">Real use cases</span></div>
+    <div class="hero-blob"></div><div class="hero-lines"></div>
+    <div class="footer"><span>Prepared for Bernardo's workshop</span><span>English deck · 16:9 HTML</span></div>
+  </section>
+
+  <section class="slide light" data-title="What Hermes is">
+    <div class="kicker">01 · Mental model</div>
+    <h2>Hermes is not “a chatbot.” It is an agent runtime.</h2>
+    <div class="grid3 mt">
+      <div class="card"><div class="number">1</div><h3>Conversation layer</h3><p>CLI, WhatsApp, Telegram, Discord, Slack, email, API server, and other gateway surfaces.</p></div>
+      <div class="card"><div class="number">2</div><h3>Action layer</h3><p>Tools for terminal, files, browser, web, image/audio, Notion, GitHub, cron, memory, and subagents.</p></div>
+      <div class="card"><div class="number">3</div><h3>Learning layer</h3><p>Persistent memory + reusable skills turn one-off work into repeatable workflows.</p></div>
+    </div>
+    <div class="footer"><span>Key framing</span><span>Agent = model + tools + memory + policies + delivery channels</span></div>
+  </section>
+
+  <section class="slide" data-title="Setup Flow">
+    <div class="kicker">02 · Workshop setup flow</div>
+    <h2>Start simple: install, pick a model, enable tools, connect channels.</h2>
+    <div class="row mt">
+      <div class="terminal">
+        <div><span class="prompt">$</span> <span class="cmd">curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash</span></div>
+        <div><span class="prompt">$</span> <span class="cmd">hermes setup</span> <span class="comment"># guided config</span></div>
+        <div><span class="prompt">$</span> <span class="cmd">hermes model</span> <span class="comment"># choose provider/model</span></div>
+        <div><span class="prompt">$</span> <span class="cmd">hermes doctor</span> <span class="comment"># verify health</span></div>
+        <br />
+        <div><span class="prompt">$</span> <span class="cmd">hermes tools</span> <span class="comment"># enable toolsets</span></div>
+        <div><span class="prompt">$</span> <span class="cmd">hermes gateway setup</span> <span class="comment"># WhatsApp, Telegram, etc.</span></div>
+      </div>
+      <div class="card"><h3>Configuration lives in predictable places</h3><p><span class="mono">~/.hermes/config.yaml</span> for behavior, <span class="mono">~/.hermes/.env</span> for secrets, <span class="mono">~/.hermes/skills/</span> for procedures, <span class="mono">~/.hermes/sessions/</span> for transcripts.</p><p class="mt2">The workshop should emphasize “configure once, reuse everywhere.”</p></div>
+    </div>
+    <div class="footer"><span>Authoritative docs: hermes-agent.nousresearch.com/docs</span><span>Commands from Hermes skill reference</span></div>
+  </section>
+
+  <section class="slide light" data-title="Core configuration">
+    <div class="kicker">03 · Core configuration</div>
+    <h2>The useful setup knobs are the ones that change behavior.</h2>
+    <div class="grid4 mt">
+      <div class="card"><h3>Model</h3><p>Provider, default model, context length, credential pools.</p></div>
+      <div class="card"><h3>Tools</h3><p>Enable only the capabilities needed per platform: file, terminal, browser, Notion, cron, etc.</p></div>
+      <div class="card"><h3>Memory</h3><p>What the agent should remember about the user, environment, and recurring preferences.</p></div>
+      <div class="card"><h3>Gateway</h3><p>Where the agent appears: WhatsApp for quick capture, terminal for build work, cron for delivery.</p></div>
+    </div>
+    <div class="terminal mt2" style="background:#151922;color:#f2f5fa">
+      <span class="prompt">$</span> <span class="cmd">hermes config edit</span> &nbsp; <span class="comment"># inspect/edit YAML</span><br />
+      <span class="prompt">$</span> <span class="cmd">hermes config set tts.edge.voice pt-BR-FranciscaNeural</span> &nbsp; <span class="comment"># example: Portuguese audio</span><br />
+      <span class="prompt">$</span> <span class="cmd">hermes tools list</span> &nbsp; <span class="comment"># understand available capabilities</span>
+    </div>
+    <div class="footer"><span>Principle</span><span>Make defaults safe, then add power deliberately</span></div>
+  </section>
+
+  <section class="slide" data-title="Capabilities Map">
+    <div class="kicker">04 · Capabilities map</div>
+    <h2>What we actually use Hermes to do</h2>
+    <div class="grid3 mt">
+      <div class="card"><h3>Think with context</h3><p>Recall past sessions, user preferences, project conventions, and durable decisions.</p></div>
+      <div class="card"><h3>Operate systems</h3><p>Read/write files, run commands, inspect logs, connect APIs, manage GitHub, Notion, Google tooling.</p></div>
+      <div class="card"><h3>Ship artifacts</h3><p>Create HTML decks, scripts, PDFs, audio briefings, dashboards, specs, and workflow docs.</p></div>
+      <div class="card"><h3>Capture from chat</h3><p>Send links/screenshots/voice notes on WhatsApp and let Hermes classify, store, summarize, or execute.</p></div>
+      <div class="card"><h3>Schedule work</h3><p>Daily briefings, monitoring, reminders, content checks, and data collection via cron jobs.</p></div>
+      <div class="card"><h3>Delegate complexity</h3><p>Spawn subagents for parallel research, code review, cleanup, or independent implementation lanes.</p></div>
+    </div>
+    <div class="footer"><span>Workshop message</span><span>Capabilities become valuable when composed into workflows</span></div>
+  </section>
+
+  <section class="slide light" data-title="Skills">
+    <div class="kicker">05 · Skills</div>
+    <h2>Skills are reusable procedures — the agent’s operating manual.</h2>
+    <div class="split-big">
+      <div>
+        <p class="quote" style="color:#11151c">Instead of re-explaining how you work every time, encode the workflow once and let Hermes load it when relevant.</p>
+        <div class="tagcloud mt2">
+          <span class="tag">hermes-agent</span><span class="tag">notion</span><span class="tag">bernardo-voice</span><span class="tag">beprecht-content-chief</span><span class="tag">google-ads-api-operations</span><span class="tag">local-service-business-operations</span><span class="tag">powerpoint</span><span class="tag">claude-design</span><span class="tag">github-pr-workflow</span><span class="tag">systematic-debugging</span>
+        </div>
+      </div>
+      <div class="card"><h3>How to explain it in the workshop</h3><ul><li>Skills are markdown files with trigger conditions, steps, commands, pitfalls, and verification.</li><li>They are loaded into context only when useful.</li><li>They capture “how Bernardo/Hermes does this,” not generic advice.</li><li>Good skills turn successful experiments into durable leverage.</li></ul></div>
+    </div>
+    <div class="footer"><span>Practical demo idea</span><span>Show skills list → open one skill → use it on a real task</span></div>
+  </section>
+
+  <section class="slide" data-title="Memory and Sessions">
+    <div class="kicker">06 · Memory + sessions</div>
+    <h2>Two different forms of continuity</h2>
+    <div class="row mt">
+      <div class="card"><h3>Persistent memory</h3><p>Compact durable facts: user preferences, stable environment details, recurring conventions.</p><div class="mt2 pill">Example: “Bernardo prefers concise WhatsApp replies.”</div></div>
+      <div class="card"><h3>Session search</h3><p>Retrieval over past conversations: useful for “where did we leave off?”, decisions, debugging context, and prior artifacts.</p><div class="mt2 pill">Example: “Find the briefing workflow session.”</div></div>
+    </div>
+    <div class="terminal mt2">
+      <span class="prompt">Workflow:</span> capture durable preference → save memory → later task loads it automatically<br />
+      <span class="prompt">Workflow:</span> need past details → session_search → reconstruct context → continue without asking user to repeat
+    </div>
+    <div class="footer"><span>Important distinction</span><span>Memory is durable facts; session search is history retrieval</span></div>
+  </section>
+
+  <section class="slide light" data-title="Gateway">
+    <div class="kicker">07 · Gateway</div>
+    <h2>WhatsApp turns Hermes into an always-available operator.</h2>
+    <div class="diagram mt">
+      <div class="node" style="left:60px;top:80px"><b>Bernardo</b><span>Voice, links, screenshots, short asks</span></div>
+      <div class="node dark" style="left:560px;top:60px"><b>Hermes Gateway</b><span>WhatsApp adapter + session routing</span></div>
+      <div class="node" style="left:1060px;top:80px"><b>Agent Runtime</b><span>Model, policies, skills, memory</span></div>
+      <div class="node" style="left:350px;top:380px"><b>Tools</b><span>Terminal · File · Browser · APIs</span></div>
+      <div class="node" style="left:820px;top:380px"><b>Outputs</b><span>Briefings · Notion pages · decks · code · reports</span></div>
+      <div class="node" style="left:1300px;top:380px"><b>Delivery</b><span>WhatsApp text/audio/media</span></div>
+      <div class="wire" style="left:310px;top:160px;width:250px"></div><div class="wire" style="left:810px;top:160px;width:250px"></div><div class="wire" style="left:640px;top:325px;width:4px;height:115px"></div><div class="wire" style="left:1070px;top:325px;width:4px;height:115px"></div><div class="wire" style="left:1070px;top:462px;width:230px"></div>
+    </div>
+    <div class="footer"><span>Demo idea</span><span>Send a link/voice note → Hermes classifies and takes action</span></div>
+  </section>
+
+  <section class="slide" data-title="Content OS">
+    <div class="kicker">08 · Use case: @beprecht Content OS</div>
+    <h2>From random inspiration to an operating system for content.</h2>
+    <div class="grid3 mt">
+      <div class="card"><h3>Capture</h3><p>Links, screenshots, viral references, rough ideas, voice notes, and exact transcript requests from WhatsApp.</p></div>
+      <div class="card"><h3>Classify</h3><p>Content idea, viral format, format reference, hook pattern, draft script, or published content.</p></div>
+      <div class="card"><h3>Store / iterate</h3><p>Notion database structure, titles, URLs, hooks, notes, and future performance reviews.</p></div>
+    </div>
+    <div class="card mt2"><h3>Strategic guardrails we use</h3><p>Founder-operator positioning, no generic AI tutorials, no guru posture, no invented data, preserve Bernardo's spoken style, optimize for retention, saves, shares, and comments.</p></div>
+    <div class="footer"><span>Skills involved</span><span>beprecht-content-chief · bernardo-voice · notion · transcribe</span></div>
+  </section>
+
+  <section class="slide light" data-title="Operations and Ads">
+    <div class="kicker">09 · Use case: local-service operations</div>
+    <h2>Hermes as a business-ops assistant, not just a writing assistant.</h2>
+    <div class="flow mt">
+      <div class="step"><div class="idx">01</div><h3>Client context</h3><p>Separate tenants, separate customers, separate playbooks.</p></div>
+      <div class="step"><div class="idx">02</div><h3>Lead capture</h3><p>WhatsApp-first flows, forms, campaign tracking, lead intent.</p></div>
+      <div class="step"><div class="idx">03</div><h3>Google Ads</h3><p>Campaign structure, account checks, KPI definitions, daily briefs.</p></div>
+      <div class="step"><div class="idx">04</div><h3>Quoting logic</h3><p>Operational heuristics like painting surface estimates and timelines.</p></div>
+      <div class="step"><div class="idx">05</div><h3>Human-in-loop</h3><p>Agent prepares, human approves, deterministic systems execute.</p></div>
+    </div>
+    <div class="footer"><span>Examples we use</span><span>Eduardo painting · Edson construction · Cecilia OS · Upscore</span></div>
+  </section>
+
+  <section class="slide" data-title="Scheduled Briefings">
+    <div class="kicker">10 · Use case: scheduled intelligence</div>
+    <h2>Recurring work becomes a product surface.</h2>
+    <div class="row mt">
+      <div class="card"><h3>AI briefing workflow</h3><p>Weekday morning Portuguese audio briefings: prioritized synthesis, founder/operator angle, concise WhatsApp preview, audio attachment.</p></div>
+      <div class="card"><h3>Cron pattern</h3><p>Pre-run script collects compact source data → Hermes reasons/synthesizes → TTS generates audio → WhatsApp delivery.</p></div>
+    </div>
+    <div class="terminal mt2">
+      <span class="prompt">$</span> <span class="cmd">hermes cron create "0 7 * * 1-5"</span> <span class="comment"># weekday briefing</span><br />
+      <span class="out">Prompt: collect signal, synthesize, apply Bernardo's angle, generate audio, deliver to origin.</span>
+    </div>
+    <div class="footer"><span>Workshop message</span><span>Scheduling changes Hermes from reactive assistant to proactive operator</span></div>
+  </section>
+
+  <section class="slide light" data-title="Architecture Pattern">
+    <div class="kicker">11 · Architecture pattern</div>
+    <h2>The pattern: LLM for reasoning, deterministic workflows for execution.</h2>
+    <div class="grid3 mt">
+      <div class="card"><h3>Reasoning</h3><p>Summarize, classify, decide next steps, generate drafts, review anomalies.</p></div>
+      <div class="card"><h3>Execution</h3><p>APIs, scripts, databases, file writes, commands, Notion updates, scheduled jobs.</p></div>
+      <div class="card"><h3>Governance</h3><p>Human approval for risky actions, secret handling, client isolation, verification before reporting success.</p></div>
+    </div>
+    <div class="card mt2"><h3>Why this matters</h3><p>It avoids the “AI magic box” trap. Hermes is powerful because it combines judgment, tools, context, and repeatable procedures with visible evidence.</p></div>
+    <div class="footer"><span>Applicable to</span><span>Content · ops · ads · research · development · personal workflows</span></div>
+  </section>
+
+  <section class="slide" data-title="Workshop Agenda">
+    <div class="kicker">12 · Suggested workshop agenda</div>
+    <h2>A practical 90-minute flow</h2>
+    <div class="agenda">
+      <div>Install Hermes, run setup, choose provider/model, run doctor</div>
+      <div>Tour config, env/secrets, profiles, and toolsets</div>
+      <div>Use WhatsApp/CLI gateway: text, voice, media, delivery</div>
+      <div>Explain memory vs session search vs skills</div>
+      <div>Demo a real use case: capture a content reference into Notion</div>
+      <div>Demo scheduled work: create or inspect a briefing cron job</div>
+      <div>Discuss safety: secrets, approvals, isolation, verification</div>
+    </div>
+    <div class="footer"><span>Goal</span><span>People leave with a working Hermes setup and one useful workflow</span></div>
+  </section>
+
+  <section class="slide light" data-title="Closing">
+    <div class="kicker">13 · Closing frame</div>
+    <div class="split-big">
+      <div><div class="bigword">Build your operator layer.</div><p class="subtitle" style="color:#424a57">The value is not one prompt. It is the compounding system: tools, memory, skills, scheduled jobs, and delivery channels around the way you actually work.</p></div>
+      <div class="card"><h3>What to leave people with</h3><ul><li>Hermes is configurable infrastructure for AI work.</li><li>Skills are where workflows become reusable.</li><li>WhatsApp makes the agent operational in real life.</li><li>Cron makes it proactive.</li><li>Verification is the difference between demo and dependable system.</li></ul></div>
+    </div>
+    <div class="footer"><span>End</span><span>Q&A / live workflow build</span></div>
+  </section>
+</main></div>
+<div class="progress" id="progress"></div><div class="navhint">← / → navigate · P print</div><div class="counter" id="counter"></div>
+<script>
+(function(){
+  const deck=document.getElementById('deck'); const slides=[...document.querySelectorAll('.slide')];
+  let index=Math.min(Math.max(parseInt(localStorage.getItem('hermesWorkshopSlide')||'0',10),0),slides.length-1);
+  function scale(){ const s=Math.min(window.innerWidth/1920, window.innerHeight/1080); deck.style.transform=`translate(-50%,-50%) scale(${s})`; }
+  function show(i){ index=(i+slides.length)%slides.length; slides.forEach((el,n)=>el.classList.toggle('active',n===index)); localStorage.setItem('hermesWorkshopSlide',index); document.getElementById('counter').textContent=`${index+1} / ${slides.length}`; document.getElementById('progress').style.width=((index+1)/slides.length*100)+'%'; document.title=`${index+1}. ${slides[index].dataset.title} — Hermes Workshop`; }
+  window.addEventListener('resize',scale); scale(); show(index);
+  window.addEventListener('keydown',e=>{ if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(index+1)} if(['ArrowLeft','PageUp','Backspace'].includes(e.key)){e.preventDefault();show(index-1)} if(e.key.toLowerCase()==='p'){window.print()} if(e.key==='Home'){show(0)} if(e.key==='End'){show(slides.length-1)} });
+  window.goToSlide=show;
+})();
+</script>
+</body>
+</html>
