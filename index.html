@@ -36,6 +36,7 @@
   .tagcloud{display:flex;gap:14px;flex-wrap:wrap}.tag{font-size:23px;font-weight:800;border-radius:18px;padding:14px 17px;background:#fff;border:1px solid #e7ded0;color:#1a1f29}.tag.dark{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.1);color:#eaf0fa}
   .split-big{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center;height:780px}.quote{font-size:46px;line-height:1.1;letter-spacing:-.035em;color:#f5efe6}.diagram{position:relative;height:620px}.node{position:absolute;border-radius:28px;padding:22px 26px;background:#fff;color:#151922;border:1px solid #e6ded2;box-shadow:0 18px 45px rgba(0,0,0,.12);min-width:250px}.node.dark{background:#151a23;color:#eef3fb;border-color:#2d3646}.node b{display:block;font-size:26px}.node span{display:block;font-size:19px;color:#697284;margin-top:7px}.node.dark span{color:#9aa4b5}.wire{position:absolute;height:3px;background:#d8cfc3;transform-origin:left center}.dark .wire{background:#3a4354}
   .bigword{font-size:150px;line-height:.85;letter-spacing:-.08em;font-weight:950}.agenda{counter-reset:item;display:grid;gap:18px;margin-top:40px}.agenda div{display:grid;grid-template-columns:76px 1fr;align-items:center;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:28px;padding:20px 26px;font-size:30px}.agenda div:before{counter-increment:item;content:counter(item,decimal-leading-zero);font:800 24px var(--mono);color:var(--accent2)}
+  .sandbox h2{font-size:62px}.sandbox .row{margin-top:34px;gap:34px}.sandbox .card{min-height:0;padding:28px}.sandbox .terminal{font-size:18px;padding:18px;border-radius:22px}.sandbox .card p{font-size:21px}.sandbox .grid3{gap:18px;margin-top:22px}.sandbox .grid3 .card{padding:22px}.sandbox .grid3 h3{font-size:25px}.sandbox .grid3 p{font-size:19px}.referral{display:block;margin-top:18px;font:800 20px var(--mono);color:var(--yellow);line-height:1.25;word-break:break-all}
   @media print{body{overflow:visible;background:#fff}.stage{display:block;height:auto;width:auto;padding:0;background:#fff}.deck{transform:none!important;width:1920px;height:auto;border-radius:0;box-shadow:none}.slide{display:block!important;position:relative!important;page-break-after:always}.counter,.navhint,.progress,.mobileControls,.tapZone{display:none}}
 </style>
 </head>
@@ -61,8 +62,23 @@
     <div class="footer"><span>Key framing</span><span>Agent = model + tools + memory + policies + delivery channels</span></div>
   </section>
 
+  <section class="slide sandbox" data-title="Sandbox First">
+    <div class="kicker">02 · Before installing</div>
+    <h2>Run Hermes in a sandbox, not your main machine.</h2>
+    <div class="row mt">
+      <div class="card"><h3>Option A · Mac mini</h3><p>Best if you have a dedicated machine at home or the office. Create a separate macOS user, SSH into it, and keep Hermes files isolated from your personal laptop.</p><div class="terminal mt2"><span class="prompt">$</span> <span class="cmd">ssh your-user@macmini.local</span><br /><span class="prompt">$</span> <span class="cmd">mkdir -p ~/hermes-workshop && cd ~/hermes-workshop</span></div></div>
+      <div class="card"><h3>Option B · Hostinger VPS</h3><p>Best for the workshop: a clean Ubuntu VPS, easy to reset, accessible from anywhere, and safe to use for terminal/file/browser tools.</p><span class="referral">hostinger.com?REFERRALCODE=0WRPRECHT01I</span><div class="terminal mt2"><span class="prompt">$</span> <span class="cmd">ssh root@YOUR_SERVER_IP</span><br /><span class="prompt">#</span> <span class="cmd">apt update && apt upgrade -y</span></div></div>
+    </div>
+    <div class="grid3 mt2">
+      <div class="card"><h3>Minimum checklist</h3><p>Ubuntu 22.04+ or macOS, SSH access, sudo/admin rights, 2GB+ RAM, stable internet.</p></div>
+      <div class="card"><h3>Create a clean shell</h3><p>Use <span class="mono">tmux</span> so the install keeps running even if the connection drops.</p><div class="terminal mt2"><span class="prompt">$</span> <span class="cmd">tmux new -s hermes</span></div></div>
+      <div class="card"><h3>Security habit</h3><p>Use a new folder/user, do not paste private production secrets during the workshop, and prefer temporary API keys.</p></div>
+    </div>
+    <div class="footer"><span>Hands-on rule</span><span>First choose the sandbox. Then copy/paste the install command.</span></div>
+  </section>
+
   <section class="slide" data-title="Setup Flow">
-    <div class="kicker">02 · Workshop setup flow</div>
+    <div class="kicker">03 · Workshop setup flow</div>
     <h2>Start simple: install, pick a model, enable tools, connect channels.</h2>
     <div class="row mt">
       <div class="terminal">
@@ -80,7 +96,7 @@
   </section>
 
   <section class="slide light" data-title="Core configuration">
-    <div class="kicker">03 · Core configuration</div>
+    <div class="kicker">04 · Core configuration</div>
     <h2>The useful setup knobs are the ones that change behavior.</h2>
     <div class="grid4 mt">
       <div class="card"><h3>Model</h3><p>Provider, default model, context length, credential pools.</p></div>
@@ -97,7 +113,7 @@
   </section>
 
   <section class="slide" data-title="Capabilities Map">
-    <div class="kicker">04 · Capabilities map</div>
+    <div class="kicker">05 · Capabilities map</div>
     <h2>What we actually use Hermes to do</h2>
     <div class="grid3 mt">
       <div class="card"><h3>Think with context</h3><p>Recall past sessions, user preferences, project conventions, and durable decisions.</p></div>
@@ -111,7 +127,7 @@
   </section>
 
   <section class="slide light" data-title="Skills">
-    <div class="kicker">05 · Skills</div>
+    <div class="kicker">06 · Skills</div>
     <h2>Skills are reusable procedures — the agent’s operating manual.</h2>
     <div class="split-big">
       <div>
@@ -126,7 +142,7 @@
   </section>
 
   <section class="slide" data-title="Memory and Sessions">
-    <div class="kicker">06 · Memory + sessions</div>
+    <div class="kicker">07 · Memory + sessions</div>
     <h2>Two different forms of continuity</h2>
     <div class="row mt">
       <div class="card"><h3>Persistent memory</h3><p>Compact durable facts: user preferences, stable environment details, recurring conventions.</p><div class="mt2 pill">Example: “Bernardo prefers concise WhatsApp replies.”</div></div>
@@ -140,7 +156,7 @@
   </section>
 
   <section class="slide light" data-title="Gateway">
-    <div class="kicker">07 · Gateway</div>
+    <div class="kicker">08 · Gateway</div>
     <h2>WhatsApp turns Hermes into an always-available operator.</h2>
     <div class="diagram mt">
       <div class="node" style="left:60px;top:80px"><b>Bernardo</b><span>Voice, links, screenshots, short asks</span></div>
@@ -155,7 +171,7 @@
   </section>
 
   <section class="slide" data-title="Content OS">
-    <div class="kicker">08 · Use case: @beprecht Content OS</div>
+    <div class="kicker">09 · Use case: @beprecht Content OS</div>
     <h2>From random inspiration to an operating system for content.</h2>
     <div class="grid3 mt">
       <div class="card"><h3>Capture</h3><p>Links, screenshots, viral references, rough ideas, voice notes, and exact transcript requests from WhatsApp.</p></div>
@@ -167,7 +183,7 @@
   </section>
 
   <section class="slide light" data-title="Operations and Ads">
-    <div class="kicker">09 · Use case: local-service operations</div>
+    <div class="kicker">10 · Use case: local-service operations</div>
     <h2>Hermes as a business-ops assistant, not just a writing assistant.</h2>
     <div class="flow mt">
       <div class="step"><div class="idx">01</div><h3>Client context</h3><p>Separate tenants, separate customers, separate playbooks.</p></div>
@@ -180,7 +196,7 @@
   </section>
 
   <section class="slide" data-title="Scheduled Briefings">
-    <div class="kicker">10 · Use case: scheduled intelligence</div>
+    <div class="kicker">11 · Use case: scheduled intelligence</div>
     <h2>Recurring work becomes a product surface.</h2>
     <div class="row mt">
       <div class="card"><h3>AI briefing workflow</h3><p>Weekday morning Portuguese audio briefings: prioritized synthesis, founder/operator angle, concise WhatsApp preview, audio attachment.</p></div>
@@ -194,7 +210,7 @@
   </section>
 
   <section class="slide light" data-title="Architecture Pattern">
-    <div class="kicker">11 · Architecture pattern</div>
+    <div class="kicker">12 · Architecture pattern</div>
     <h2>The pattern: LLM for reasoning, deterministic workflows for execution.</h2>
     <div class="grid3 mt">
       <div class="card"><h3>Reasoning</h3><p>Summarize, classify, decide next steps, generate drafts, review anomalies.</p></div>
@@ -206,7 +222,7 @@
   </section>
 
   <section class="slide" data-title="Workshop Agenda">
-    <div class="kicker">12 · Suggested workshop agenda</div>
+    <div class="kicker">13 · Suggested workshop agenda</div>
     <h2>A practical 90-minute flow</h2>
     <div class="agenda">
       <div>Install Hermes, run setup, choose provider/model, run doctor</div>
@@ -221,7 +237,7 @@
   </section>
 
   <section class="slide light" data-title="Closing">
-    <div class="kicker">13 · Closing frame</div>
+    <div class="kicker">14 · Closing frame</div>
     <div class="split-big">
       <div><div class="bigword">Build your operator layer.</div><p class="subtitle" style="color:#424a57">The value is not one prompt. It is the compounding system: tools, memory, skills, scheduled jobs, and delivery channels around the way you actually work.</p></div>
       <div class="card"><h3>What to leave people with</h3><ul><li>Hermes is configurable infrastructure for AI work.</li><li>Skills are where workflows become reusable.</li><li>WhatsApp makes the agent operational in real life.</li><li>Cron makes it proactive.</li><li>Verification is the difference between demo and dependable system.</li></ul></div>
