@@ -30,13 +30,13 @@
   .light{background:var(--paper);color:var(--paper-ink)}.light .kicker{color:#0f8f78}.light p,.light .small,.light .tiny{color:var(--paper-muted)}.light .card{background:#fff;border:1px solid #e7ded0;box-shadow:0 12px 36px rgba(30,28,23,.08)}.light .card p,.light .card li{color:#424a57}.light .pill{background:#fff;border-color:#e7ded0;color:#222831}.light .number{color:#e5582d}
   .hero-blob{position:absolute;right:-120px;bottom:-180px;width:780px;height:780px;border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--accent),#7739ff 48%,transparent 69%);filter:blur(.2px);opacity:.8}.hero-lines{position:absolute;inset:auto 90px 90px auto;width:620px;height:360px;border:1px solid rgba(255,255,255,.1);border-radius:42px;background:repeating-linear-gradient(0deg,rgba(255,255,255,.055),rgba(255,255,255,.055) 1px,transparent 1px,transparent 42px)}
   .footer{position:absolute;left:92px;right:92px;bottom:40px;display:flex;justify-content:space-between;align-items:center;color:rgba(255,255,255,.45);font-size:18px}.light .footer{color:rgba(0,0,0,.42)}
-  .progress{position:absolute;left:0;bottom:0;height:6px;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0%;z-index:20}.counter{position:fixed;right:22px;top:18px;color:#9ba3b2;font:14px var(--mono);z-index:30;background:rgba(9,11,16,.55);padding:6px 10px;border-radius:999px}.navhint{position:fixed;left:22px;top:18px;color:#737b8b;font:14px var(--mono);z-index:30;background:rgba(9,11,16,.55);padding:6px 10px;border-radius:999px}
+  .progress{position:absolute;left:0;bottom:0;height:6px;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0%;z-index:20}.counter{position:fixed;right:22px;top:18px;color:#9ba3b2;font:14px var(--mono);z-index:30;background:rgba(9,11,16,.55);padding:6px 10px;border-radius:999px}.navhint{position:fixed;left:22px;top:18px;color:#737b8b;font:14px var(--mono);z-index:30;background:rgba(9,11,16,.55);padding:6px 10px;border-radius:999px}.mobileControls{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);display:flex;gap:14px;z-index:35}.mobileControls button{width:56px;height:56px;border-radius:999px;border:1px solid rgba(255,255,255,.16);background:rgba(9,11,16,.68);backdrop-filter:blur(10px);color:#edf3fb;font-size:28px;line-height:1;box-shadow:0 12px 34px rgba(0,0,0,.25);touch-action:manipulation}.tapZone{position:fixed;top:70px;bottom:90px;width:34vw;z-index:25}.tapZone.left{left:0}.tapZone.right{right:0}@media (hover:hover) and (pointer:fine){.mobileControls{opacity:.35;transition:opacity .2s}.mobileControls:hover{opacity:1}}
   .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:22px}.step{background:#fff;border:1px solid #e6ded2;border-radius:30px;padding:26px;min-height:240px}.step .idx{font:800 19px var(--mono);color:#e5582d;margin-bottom:36px}.step h3{font-size:28px}.step p{font-size:22px;margin-top:14px}
   .terminal{background:#0b0e14;border:1px solid #252d3a;border-radius:30px;padding:28px;font-family:var(--mono);font-size:22px;line-height:1.6;color:#dce5f4;box-shadow:inset 0 1px rgba(255,255,255,.06)}.terminal .prompt{color:#45d6b5}.terminal .comment{color:#7d8797}.terminal .cmd{color:#ffd166}.terminal .out{color:#a8b3c7}
   .tagcloud{display:flex;gap:14px;flex-wrap:wrap}.tag{font-size:23px;font-weight:800;border-radius:18px;padding:14px 17px;background:#fff;border:1px solid #e7ded0;color:#1a1f29}.tag.dark{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.1);color:#eaf0fa}
   .split-big{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center;height:780px}.quote{font-size:46px;line-height:1.1;letter-spacing:-.035em;color:#f5efe6}.diagram{position:relative;height:620px}.node{position:absolute;border-radius:28px;padding:22px 26px;background:#fff;color:#151922;border:1px solid #e6ded2;box-shadow:0 18px 45px rgba(0,0,0,.12);min-width:250px}.node.dark{background:#151a23;color:#eef3fb;border-color:#2d3646}.node b{display:block;font-size:26px}.node span{display:block;font-size:19px;color:#697284;margin-top:7px}.node.dark span{color:#9aa4b5}.wire{position:absolute;height:3px;background:#d8cfc3;transform-origin:left center}.dark .wire{background:#3a4354}
   .bigword{font-size:150px;line-height:.85;letter-spacing:-.08em;font-weight:950}.agenda{counter-reset:item;display:grid;gap:18px;margin-top:40px}.agenda div{display:grid;grid-template-columns:76px 1fr;align-items:center;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:28px;padding:20px 26px;font-size:30px}.agenda div:before{counter-increment:item;content:counter(item,decimal-leading-zero);font:800 24px var(--mono);color:var(--accent2)}
-  @media print{body{overflow:visible;background:#fff}.stage{display:block;height:auto;width:auto;padding:0;background:#fff}.deck{transform:none!important;width:1920px;height:auto;border-radius:0;box-shadow:none}.slide{display:block!important;position:relative!important;page-break-after:always}.counter,.navhint,.progress{display:none}}
+  @media print{body{overflow:visible;background:#fff}.stage{display:block;height:auto;width:auto;padding:0;background:#fff}.deck{transform:none!important;width:1920px;height:auto;border-radius:0;box-shadow:none}.slide{display:block!important;position:relative!important;page-break-after:always}.counter,.navhint,.progress,.mobileControls,.tapZone{display:none}}
 </style>
 </head>
 <body>
@@ -229,7 +229,10 @@
     <div class="footer"><span>End</span><span>Q&A / live workflow build</span></div>
   </section>
 </main></div>
-<div class="progress" id="progress"></div><div class="navhint">← / → navigate · P print</div><div class="counter" id="counter"></div>
+<div class="progress" id="progress"></div>
+<div class="tapZone left" id="tapPrev" aria-hidden="true"></div><div class="tapZone right" id="tapNext" aria-hidden="true"></div>
+<div class="navhint">Tap sides / swipe · ← / → · P print</div><div class="counter" id="counter"></div>
+<div class="mobileControls" aria-label="Slide navigation"><button id="prevBtn" type="button" aria-label="Previous slide">‹</button><button id="nextBtn" type="button" aria-label="Next slide">›</button></div>
 <script>
 (function(){
   const deck=document.getElementById('deck'); const slides=[...document.querySelectorAll('.slide')];
@@ -238,6 +241,19 @@
   function show(i){ index=(i+slides.length)%slides.length; slides.forEach((el,n)=>el.classList.toggle('active',n===index)); localStorage.setItem('hermesWorkshopSlide',index); document.getElementById('counter').textContent=`${index+1} / ${slides.length}`; document.getElementById('progress').style.width=((index+1)/slides.length*100)+'%'; document.title=`${index+1}. ${slides[index].dataset.title} — Hermes Workshop`; }
   window.addEventListener('resize',scale); scale(); show(index);
   window.addEventListener('keydown',e=>{ if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(index+1)} if(['ArrowLeft','PageUp','Backspace'].includes(e.key)){e.preventDefault();show(index-1)} if(e.key.toLowerCase()==='p'){window.print()} if(e.key==='Home'){show(0)} if(e.key==='End'){show(slides.length-1)} });
+  document.getElementById('prevBtn').addEventListener('click',e=>{e.stopPropagation();show(index-1)});
+  document.getElementById('nextBtn').addEventListener('click',e=>{e.stopPropagation();show(index+1)});
+  document.getElementById('tapPrev').addEventListener('click',()=>show(index-1));
+  document.getElementById('tapNext').addEventListener('click',()=>show(index+1));
+  let touchStartX=0, touchStartY=0;
+  window.addEventListener('touchstart',e=>{ if(e.touches.length!==1) return; touchStartX=e.touches[0].clientX; touchStartY=e.touches[0].clientY; }, {passive:true});
+  window.addEventListener('touchend',e=>{
+    if(!touchStartX || !e.changedTouches.length) return;
+    const dx=e.changedTouches[0].clientX-touchStartX;
+    const dy=e.changedTouches[0].clientY-touchStartY;
+    touchStartX=0; touchStartY=0;
+    if(Math.abs(dx)>48 && Math.abs(dx)>Math.abs(dy)*1.4) show(index + (dx<0 ? 1 : -1));
+  }, {passive:true});
   window.goToSlide=show;
 })();
 </script>
