@@ -30,7 +30,7 @@
   .light{background:var(--paper);color:var(--paper-ink)}.light .kicker{color:#0f8f78}.light p,.light .small,.light .tiny{color:var(--paper-muted)}.light .card{background:#fff;border:1px solid #e7ded0;box-shadow:0 12px 36px rgba(30,28,23,.08)}.light .card p,.light .card li{color:#424a57}.light .pill{background:#fff;border-color:#e7ded0;color:#222831}.light .number{color:#e5582d}
   .hero-blob{position:absolute;right:-120px;bottom:-180px;width:780px;height:780px;border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--accent),#7739ff 48%,transparent 69%);filter:blur(.2px);opacity:.8}.hero-lines{position:absolute;inset:auto 90px 90px auto;width:620px;height:360px;border:1px solid rgba(255,255,255,.1);border-radius:42px;background:repeating-linear-gradient(0deg,rgba(255,255,255,.055),rgba(255,255,255,.055) 1px,transparent 1px,transparent 42px)}
   .footer{position:absolute;left:92px;right:92px;bottom:40px;display:flex;justify-content:space-between;align-items:center;color:rgba(255,255,255,.45);font-size:18px}.light .footer{color:rgba(0,0,0,.42)}
-  .progress{position:absolute;left:0;bottom:0;height:6px;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0%;z-index:20}.counter{position:fixed;right:22px;top:18px;color:#9ba3b2;font:14px var(--mono);z-index:30;background:rgba(9,11,16,.55);padding:6px 10px;border-radius:999px}.navhint{position:fixed;left:22px;top:18px;color:#737b8b;font:14px var(--mono);z-index:30;background:rgba(9,11,16,.55);padding:6px 10px;border-radius:999px}.mobileControls{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);display:flex;gap:14px;z-index:35}.mobileControls button{width:56px;height:56px;border-radius:999px;border:1px solid rgba(255,255,255,.16);background:rgba(9,11,16,.68);backdrop-filter:blur(10px);color:#edf3fb;font-size:28px;line-height:1;box-shadow:0 12px 34px rgba(0,0,0,.25);touch-action:manipulation}.tapZone{position:fixed;top:70px;bottom:90px;width:34vw;z-index:25}.tapZone.left{left:0}.tapZone.right{right:0}@media (hover:hover) and (pointer:fine){.mobileControls{opacity:.35;transition:opacity .2s}.mobileControls:hover{opacity:1}}
+  .progress{position:absolute;left:0;bottom:0;height:6px;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0%;z-index:20}.counter{position:fixed;right:22px;top:18px;color:#9ba3b2;font:14px var(--mono);z-index:30;background:rgba(9,11,16,.55);padding:6px 10px;border-radius:999px}.navhint{position:fixed;left:22px;top:18px;color:#737b8b;font:14px var(--mono);z-index:30;background:rgba(9,11,16,.55);padding:6px 10px;border-radius:999px}.mobileControls{position:fixed;left:18px;right:18px;bottom:18px;display:none;justify-content:space-between;gap:14px;z-index:35;pointer-events:none}.mobileControls button{width:56px;height:56px;border-radius:999px;border:1px solid rgba(255,255,255,.16);background:rgba(9,11,16,.68);backdrop-filter:blur(10px);color:#edf3fb;font-size:28px;line-height:1;box-shadow:0 12px 34px rgba(0,0,0,.25);touch-action:manipulation;pointer-events:auto}.tapZone{position:fixed;top:70px;bottom:90px;width:34vw;z-index:25}.tapZone.left{left:0}.tapZone.right{right:0}@media (pointer:coarse){.mobileControls{display:flex}}
   .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:22px}.step{background:#fff;border:1px solid #e6ded2;border-radius:30px;padding:26px;min-height:240px}.step .idx{font:800 19px var(--mono);color:#e5582d;margin-bottom:36px}.step h3{font-size:28px}.step p{font-size:22px;margin-top:14px}
   .terminal{background:#0b0e14;border:1px solid #252d3a;border-radius:30px;padding:28px;font-family:var(--mono);font-size:22px;line-height:1.6;color:#dce5f4;box-shadow:inset 0 1px rgba(255,255,255,.06)}.terminal .prompt{color:#45d6b5}.terminal .comment{color:#7d8797}.terminal .cmd{color:#ffd166}.terminal .out{color:#a8b3c7}
   .tagcloud{display:flex;gap:14px;flex-wrap:wrap}.tag{font-size:23px;font-weight:800;border-radius:18px;padding:14px 17px;background:#fff;border:1px solid #e7ded0;color:#1a1f29}.tag.dark{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.1);color:#eaf0fa}
@@ -97,23 +97,39 @@
 
   <section class="slide light" data-title="Core configuration">
     <div class="kicker">04 · Core configuration</div>
-    <h2>The useful setup knobs are the ones that change behavior.</h2>
+    <h2>After install: configure the agent surface area.</h2>
     <div class="grid4 mt">
-      <div class="card"><h3>Model</h3><p>Provider, default model, context length, credential pools.</p></div>
-      <div class="card"><h3>Tools</h3><p>Enable only the capabilities needed per platform: file, terminal, browser, Notion, cron, etc.</p></div>
-      <div class="card"><h3>Memory</h3><p>What the agent should remember about the user, environment, and recurring preferences.</p></div>
-      <div class="card"><h3>Gateway</h3><p>Where the agent appears: WhatsApp for quick capture, terminal for build work, cron for delivery.</p></div>
+      <div class="card"><h3>1 · Model</h3><p>Pick the provider and default model Hermes will use for reasoning.</p></div>
+      <div class="card"><h3>2 · Tools</h3><p>Enable capabilities per platform: terminal, files, browser, web, Notion, cron, etc.</p></div>
+      <div class="card"><h3>3 · Channels</h3><p>Set where Hermes lives: CLI first, then WhatsApp / Telegram / Slack / Discord / Email.</p></div>
+      <div class="card"><h3>4 · Memory</h3><p>Decide what Hermes should remember across sessions and what should stay temporary.</p></div>
     </div>
     <div class="terminal mt2" style="background:#151922;color:#f2f5fa">
-      <span class="prompt">$</span> <span class="cmd">hermes config edit</span> &nbsp; <span class="comment"># inspect/edit YAML</span><br />
-      <span class="prompt">$</span> <span class="cmd">hermes config set tts.edge.voice pt-BR-FranciscaNeural</span> &nbsp; <span class="comment"># example: Portuguese audio</span><br />
-      <span class="prompt">$</span> <span class="cmd">hermes tools list</span> &nbsp; <span class="comment"># understand available capabilities</span>
+      <span class="prompt">$</span> <span class="cmd">hermes model</span> &nbsp; <span class="comment"># provider + model setup</span><br />
+      <span class="prompt">$</span> <span class="cmd">hermes tools</span> &nbsp; <span class="comment"># enable/disable toolsets</span><br />
+      <span class="prompt">$</span> <span class="cmd">hermes gateway setup</span> &nbsp; <span class="comment"># configure messaging channels</span><br />
+      <span class="prompt">$</span> <span class="cmd">hermes config edit</span> &nbsp; <span class="comment"># inspect advanced YAML settings</span>
     </div>
-    <div class="footer"><span>Principle</span><span>Make defaults safe, then add power deliberately</span></div>
+    <div class="footer"><span>Principle</span><span>Model first, tools second, channels third.</span></div>
+  </section>
+
+  <section class="slide" data-title="Model Setup">
+    <div class="kicker">05 · Model setup</div>
+    <h2>Use any model — but for this workshop, I recommend OpenAI Codex via OAuth.</h2>
+    <div class="row mt">
+      <div class="card"><h3>Why this path</h3><p>No API key pasted into the terminal, credentials are stored in <span class="mono">~/.hermes/auth.json</span>, and it is usually the most efficient default for hands-on agent work.</p><p class="small mt2">If you already use another provider, Hermes can switch later with <span class="mono">hermes model</span>.</p></div>
+      <div class="terminal"><span class="prompt">$</span> <span class="cmd">hermes login --provider openai-codex</span><br /><span class="out"># Open the URL, enter the device code, approve access</span><br /><br /><span class="prompt">$</span> <span class="cmd">hermes model</span><br /><span class="out"># Choose “OpenAI Codex” and pick the recommended Codex model</span><br /><br /><span class="prompt">$</span> <span class="cmd">hermes doctor</span><br /><span class="prompt">$</span> <span class="cmd">hermes chat -q "Say hello from my new Hermes agent"</span></div>
+    </div>
+    <div class="grid3 mt2">
+      <div class="card"><h3>Step 1</h3><p>Run the OAuth login command and complete the browser/device-code flow.</p></div>
+      <div class="card"><h3>Step 2</h3><p>Run <span class="mono">hermes model</span>, select OpenAI Codex, then accept the suggested model.</p></div>
+      <div class="card"><h3>Step 3</h3><p>Run a one-line chat test before adding tools, skills, or channels.</p></div>
+    </div>
+    <div class="footer"><span>Auth note</span><span>Direct OpenAI API keys also work, but OAuth is the clean workshop path.</span></div>
   </section>
 
   <section class="slide" data-title="Capabilities Map">
-    <div class="kicker">05 · Capabilities map</div>
+    <div class="kicker">06 · Capabilities map</div>
     <h2>What we actually use Hermes to do</h2>
     <div class="grid3 mt">
       <div class="card"><h3>Think with context</h3><p>Recall past sessions, user preferences, project conventions, and durable decisions.</p></div>
@@ -127,7 +143,7 @@
   </section>
 
   <section class="slide light" data-title="Skills">
-    <div class="kicker">06 · Skills</div>
+    <div class="kicker">07 · Skills</div>
     <h2>Skills are reusable procedures — the agent’s operating manual.</h2>
     <div class="split-big">
       <div>
@@ -142,7 +158,7 @@
   </section>
 
   <section class="slide" data-title="Memory and Sessions">
-    <div class="kicker">07 · Memory + sessions</div>
+    <div class="kicker">08 · Memory + sessions</div>
     <h2>Two different forms of continuity</h2>
     <div class="row mt">
       <div class="card"><h3>Persistent memory</h3><p>Compact durable facts: user preferences, stable environment details, recurring conventions.</p><div class="mt2 pill">Example: “Bernardo prefers concise WhatsApp replies.”</div></div>
@@ -156,7 +172,7 @@
   </section>
 
   <section class="slide light" data-title="Gateway">
-    <div class="kicker">08 · Gateway</div>
+    <div class="kicker">09 · Gateway</div>
     <h2>WhatsApp turns Hermes into an always-available operator.</h2>
     <div class="diagram mt">
       <div class="node" style="left:60px;top:80px"><b>Bernardo</b><span>Voice, links, screenshots, short asks</span></div>
@@ -171,7 +187,7 @@
   </section>
 
   <section class="slide" data-title="Content OS">
-    <div class="kicker">09 · Use case: @beprecht Content OS</div>
+    <div class="kicker">10 · Use case: @beprecht Content OS</div>
     <h2>From random inspiration to an operating system for content.</h2>
     <div class="grid3 mt">
       <div class="card"><h3>Capture</h3><p>Links, screenshots, viral references, rough ideas, voice notes, and exact transcript requests from WhatsApp.</p></div>
@@ -183,7 +199,7 @@
   </section>
 
   <section class="slide light" data-title="Operations and Ads">
-    <div class="kicker">10 · Use case: local-service operations</div>
+    <div class="kicker">11 · Use case: local-service operations</div>
     <h2>Hermes as a business-ops assistant, not just a writing assistant.</h2>
     <div class="flow mt">
       <div class="step"><div class="idx">01</div><h3>Client context</h3><p>Separate tenants, separate customers, separate playbooks.</p></div>
@@ -196,7 +212,7 @@
   </section>
 
   <section class="slide" data-title="Scheduled Briefings">
-    <div class="kicker">11 · Use case: scheduled intelligence</div>
+    <div class="kicker">12 · Use case: scheduled intelligence</div>
     <h2>Recurring work becomes a product surface.</h2>
     <div class="row mt">
       <div class="card"><h3>AI briefing workflow</h3><p>Weekday morning Portuguese audio briefings: prioritized synthesis, founder/operator angle, concise WhatsApp preview, audio attachment.</p></div>
@@ -210,7 +226,7 @@
   </section>
 
   <section class="slide light" data-title="Architecture Pattern">
-    <div class="kicker">12 · Architecture pattern</div>
+    <div class="kicker">13 · Architecture pattern</div>
     <h2>The pattern: LLM for reasoning, deterministic workflows for execution.</h2>
     <div class="grid3 mt">
       <div class="card"><h3>Reasoning</h3><p>Summarize, classify, decide next steps, generate drafts, review anomalies.</p></div>
@@ -222,7 +238,7 @@
   </section>
 
   <section class="slide" data-title="Workshop Agenda">
-    <div class="kicker">13 · Suggested workshop agenda</div>
+    <div class="kicker">14 · Suggested workshop agenda</div>
     <h2>A practical 90-minute flow</h2>
     <div class="agenda">
       <div>Install Hermes, run setup, choose provider/model, run doctor</div>
@@ -237,7 +253,7 @@
   </section>
 
   <section class="slide light" data-title="Closing">
-    <div class="kicker">14 · Closing frame</div>
+    <div class="kicker">15 · Closing frame</div>
     <div class="split-big">
       <div><div class="bigword">Build your operator layer.</div><p class="subtitle" style="color:#424a57">The value is not one prompt. It is the compounding system: tools, memory, skills, scheduled jobs, and delivery channels around the way you actually work.</p></div>
       <div class="card"><h3>What to leave people with</h3><ul><li>Hermes is configurable infrastructure for AI work.</li><li>Skills are where workflows become reusable.</li><li>WhatsApp makes the agent operational in real life.</li><li>Cron makes it proactive.</li><li>Verification is the difference between demo and dependable system.</li></ul></div>
